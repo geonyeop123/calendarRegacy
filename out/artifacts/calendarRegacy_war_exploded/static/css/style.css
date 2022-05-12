@@ -1,0 +1,69 @@
+body {
+  width: 500px;
+}
+.main_container {
+  height: 500px;
+}
+
+table.calendar_table {
+  border-collapse: collapse;
+  width: 700px;
+  font-size: 20px;
+}
+table.calendar_table th {
+  font-weight: bold;
+  vertical-align: middle;
+  height: 70px;
+  color: #5190f0;
+}
+table.calendar_table td:first-child {
+  color: red;
+}
+table.calendar_table td:last-child {
+  color: #5190f0;
+}
+table.calendar_table td {
+  height: 70px;
+  vertical-align: top;
+  font-size: 15px;
+  padding-top: 10px;
+  padding-left: 20px;
+  word-wrap: break-word;
+  word-break: break-all;
+  width: 120px;
+}
+
+.title {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 700px;
+  height: 50px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  font-size: 25px;
+  font-weight: 700;
+  background-color: #5190f0;
+  color: white;
+}
+.title button {
+  height: 100%;
+  width: 40px;
+  color: white;
+  font-weight: 700;
+  font-size: 25px;
+  border: none;
+  background-color: #5190f0;
+}
+
+.anotherMonth {
+  color: gray !important;
+}
+.holiday {
+  color: red;
+}
+.holiday .holiday_name {
+  font-size: 11px;
+  margin-top: 10px;
+  font-weight: 700;
+}
