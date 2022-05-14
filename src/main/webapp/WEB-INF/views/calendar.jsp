@@ -89,7 +89,6 @@
 
             console.log(holiday);
             $.each(vo.dateList, function(index, item){
-                console.log(item);
                 listMonth = parseInt(item.substring(5,7));
                 listDay = item.substring(8,10);
                 // 최초와 7번째마다 tr태그로 구분

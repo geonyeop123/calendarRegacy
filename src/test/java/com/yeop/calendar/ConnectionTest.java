@@ -1,5 +1,7 @@
 package com.yeop.calendar;
 
+import com.yeop.calendar.domain.HolidayDTO;
+import com.yeop.calendar.persistence.CalendarDAO;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +17,17 @@ public class ConnectionTest {
     @Autowired
     SqlSession session;
 
+    @Autowired
+    CalendarDAO dao;
+
     @Test
     public void test(){
         System.out.println(session);
+    }
+
+    @Test
+    public void selectTest()throws Exception{
+        HolidayDTO dto = dao.select();
+        System.out.println(dto);
     }
 }

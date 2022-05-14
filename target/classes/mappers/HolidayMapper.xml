@@ -3,4 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yeop.calendar.mapper.HolidayMapper">
+    <select id="select" resultType="HolidayDTO">
+        SELECT holiday_idx, year, name, date
+        FROM TB_HOLIDAY LIMIT 1
+    </select>
 </mapper>

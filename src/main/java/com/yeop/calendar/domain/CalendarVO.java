@@ -1,14 +1,16 @@
 package com.yeop.calendar.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public class CalendarVO {
     private Integer year;
     private Integer month;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private List<LocalDate> dateList;
-    private List<Holiday> holidayList;
+    private List<CalendarDate> holidayList;
 
     public CalendarVO(){}
 
@@ -39,11 +41,11 @@ public class CalendarVO {
         return dateList;
     }
 
-    public List<Holiday> getHolidayList() {
+    public List<CalendarDate> getHolidayList() {
         return holidayList;
     }
 
-    public void setHolidayList(List<Holiday> holidayList) {
+    public void setHolidayList(List<CalendarDate> holidayList) {
         this.holidayList = holidayList;
     }
 

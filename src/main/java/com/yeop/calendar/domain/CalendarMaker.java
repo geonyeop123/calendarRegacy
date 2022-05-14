@@ -32,7 +32,7 @@ public class CalendarMaker {
 
     private List<LocalDate> dateList;
 
-    private List<Holiday> holidayList = new ArrayList<>();
+    private List<CalendarDate> holidayList = new ArrayList<>();
 
     private int year;
     private int month;
@@ -77,7 +77,7 @@ public class CalendarMaker {
         }
     }
 
-    public List<Holiday> createHolidayList() throws Exception{
+    public List<CalendarDate> createHolidayList() throws Exception{
         StringBuilder urlBuilder = null;
         URL url = null;
         HttpURLConnection conn = null;
@@ -88,7 +88,7 @@ public class CalendarMaker {
         NodeList list = null;
         Node item = null;
         Element element = null;
-        Holiday holiday = null;
+        CalendarDate holiday = null;
 
         String syear = String.valueOf(year);
         String smonth = month < 10 ? "0" + month : String.valueOf(month);
@@ -149,7 +149,7 @@ public class CalendarMaker {
             item = list.item(i);
             if(item.getNodeType() == Node.ELEMENT_NODE){
                 element = (Element) item;
-                holiday = new Holiday();
+                holiday = new CalendarDate();
                 holiday.setName(element.getElementsByTagName("dateName").item(0).getTextContent());
                 holiday.setDate(LocalDate.parse(element.getElementsByTagName("locdate").item(0).getTextContent(),
                         DateTimeFormatter.ofPattern("yyyyMMdd")));

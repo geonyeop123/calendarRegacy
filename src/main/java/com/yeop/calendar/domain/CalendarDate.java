@@ -1,14 +1,17 @@
 package com.yeop.calendar.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
-public class Holiday {
+public class CalendarDate {
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String name;
 
-    Holiday(){}
+    CalendarDate(){}
 
-    Holiday(LocalDate date, String name){
+    CalendarDate(LocalDate date, String name){
         this.date = date;
         this.name = name;
     }
@@ -31,7 +34,7 @@ public class Holiday {
 
     @Override
     public String toString() {
-        return "Holiday{" +
+        return "CalendarDate{" +
                 "date=" + date +
                 ", name='" + name + '\'' +
                 '}';
