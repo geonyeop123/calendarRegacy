@@ -1,6 +1,7 @@
 package com.yeop.calendar.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,15 +9,24 @@ import java.util.List;
 public class CalendarVO {
     private Integer year;
     private Integer month;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private List<LocalDate> dateList;
-    private List<CalendarDate> holidayList;
+
+    private List<CalendarDTO> dateList;
+
+
+    private int todayYear;
 
     public CalendarVO(){}
 
-    public CalendarVO(Integer year, Integer month){
+    public CalendarVO(int year, int month){
+        this.todayYear = LocalDate.now().getYear();
         this.year = year;
         this.month = month;
+    }
+
+    public CalendarVO(LocalDate today){
+        this.todayYear = today.getYear();
+        this.year = today.getYear();
+        this.month = today.getMonth().getValue();
     }
 
 
@@ -37,20 +47,22 @@ public class CalendarVO {
         this.month = month;
     }
 
-    public List<LocalDate> getDateList() {
+    public List<CalendarDTO> getDateList() {
         return dateList;
     }
 
-    public List<CalendarDate> getHolidayList() {
-        return holidayList;
-    }
-
-    public void setHolidayList(List<CalendarDate> holidayList) {
-        this.holidayList = holidayList;
-    }
-
-    public void setDateList(List<LocalDate> dateList) {
+    public void setDateList(List<CalendarDTO> dateList) {
         this.dateList = dateList;
+    }
+
+
+    public int getTodayYear() {
+        return todayYear;
+    }
+
+
+    public void setTodayYear(int todayYear) {
+        this.todayYear = todayYear;
     }
 
     @Override
@@ -59,7 +71,7 @@ public class CalendarVO {
                 "year=" + year +
                 ", month=" + month +
                 ", dateList=" + dateList +
-                ", holidayList=" + holidayList +
+                ", todayYear=" + todayYear +
                 '}';
     }
 }

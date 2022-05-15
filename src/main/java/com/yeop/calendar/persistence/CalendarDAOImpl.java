@@ -1,9 +1,12 @@
 package com.yeop.calendar.persistence;
 
-import com.yeop.calendar.domain.HolidayDTO;
+import com.yeop.calendar.domain.CalendarVO;
+import com.yeop.calendar.domain.CalendarDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class CalendarDAOImpl implements CalendarDAO{
@@ -14,7 +17,23 @@ public class CalendarDAOImpl implements CalendarDAO{
     private static final String namespace = "com.yeop.calendar.mapper.HolidayMapper.";
 
     @Override
-    public HolidayDTO select() throws Exception {
+    public CalendarDTO select() throws Exception {
         return sqlSession.selectOne(namespace + "select");
     }
+
+    @Override
+    public List<CalendarDTO> selectList(CalendarVO vo) throws Exception {
+        return sqlSession.selectList(namespace + "selectList", vo);
+    }
+
+    @Override
+    public int selectCount(int year) throws Exception {
+        return sqlSession.selectOne(namespace + "count", year);
+    }
+
+    @Override
+    public int create(List<CalendarDTO> list) throws Exception {
+        return sqlSession.insert(namespace + "createHoliday", list);
+    }
+
 }

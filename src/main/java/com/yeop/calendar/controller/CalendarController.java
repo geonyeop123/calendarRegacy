@@ -1,7 +1,8 @@
 package com.yeop.calendar.controller;
 
-import com.yeop.calendar.domain.CalendarMaker;
 import com.yeop.calendar.domain.CalendarVO;
+import com.yeop.calendar.service.CalendarService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,35 +13,24 @@ import java.time.LocalDate;
 @Controller
 public class CalendarController {
 
+    @Autowired
+    CalendarService service;
+
     @RequestMapping("/calendar")
-    public String home(CalendarVO vo, Model m){
-        /////
-        // 선언
-        /////
-        LocalDate date;
-
-        /////
-        // 유효성 검사
-        /////
-
-        // 값이 없거나, month가 0~12가 아닌 경우 현재의 일자로 세팅
-        if((vo.getYear() == null || vo.getMonth() == null) || (0 > vo.getMonth()) || ( 12 < vo.getMonth())){
-            date = LocalDate.now();
-            vo = new CalendarVO(date.getYear(), date.getMonth().getValue());
-        }
-
+    public String home(Model m){
         /////
         // 반환
         /////
-        m.addAttribute(vo);
+
+        // VO에 현재일을 담아서 Model에 전달
+        m.addAttribute(new CalendarVO(LocalDate.now()));
+
         return "calendar";
     }
 
     @ResponseBody
     @PostMapping("/proc")
     public CalendarVO proc(@RequestBody CalendarVO vo) throws Exception{
-
-        CalendarMaker cm = null;
         /////
         // 유효성 검사
         /////
@@ -53,18 +43,8 @@ public class CalendarController {
         }
 
         /////
-        // 로직
-        /////
-        cm = new CalendarMaker(vo);
-        vo.setDateList(cm.createDateList());
-        vo.setHolidayList(cm.createHolidayList());
-
-
-
-        /////
         // 반환
         /////
-        return vo;
+        return service.proc(vo);
     }
-
 }

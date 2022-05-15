@@ -1,12 +1,26 @@
 package com.yeop.calendar.domain;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
-public class HolidayDTO {
+import java.time.LocalDate;
+import java.util.Objects;
+
+public class CalendarDTO {
     private int holidayIdx;
     private int year;
     private String name;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
+    public CalendarDTO(){}
+
+    public CalendarDTO(int year, String name, LocalDate date){
+        this.year = year;
+        this.name = name;
+        this.date = date;
+    }
 
     public int getHolidayIdx() {
         return holidayIdx;
@@ -32,10 +46,12 @@ public class HolidayDTO {
         this.name = name;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public LocalDate getDate() {
         return date;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -48,5 +64,18 @@ public class HolidayDTO {
                 ", name='" + name + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CalendarDTO that = (CalendarDTO) o;
+        return Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date);
     }
 }

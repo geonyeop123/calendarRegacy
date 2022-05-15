@@ -46,8 +46,10 @@
         let dateJSON = {};
         let year = parseInt('${calendarVO.year}');
         let month = parseInt('${calendarVO.month}');
+        let todayYear = parseInt('${calendarVO.todayYear}');
         let listMonth = 0;
         let listDay = 0;
+        let listName = null;
         let tbodyHTML = "";
 
         // calendar를 만드는 ajax 함수
@@ -60,11 +62,9 @@
                 headers : { "content-type": "application/json"},
                 data : JSON.stringify(dateJSON),
                 success : function(result){
-                    console.log(result);
                     drawCalendar(result);
                 },
-                error: function(request,status,error){
-                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                error: function(){
                     alert("알 수 없는 에러가 발생했습니다!!");
                     location.href='error.jsp';
                 },
@@ -83,22 +83,20 @@
             // Holiday 객체 생성
             // key = date
             // value = name
-            vo.holidayList.forEach((data)=>{
-                holiday[data.date] = data.name;
-            })
 
-            console.log(holiday);
             $.each(vo.dateList, function(index, item){
-                listMonth = parseInt(item.substring(5,7));
-                listDay = item.substring(8,10);
+                listMonth = parseInt(item.date.substring(5,7));
+                listDay = item.date.substring(8,10);
+                listName = item.name;
                 // 최초와 7번째마다 tr태그로 구분
                 if( index == 0 || index % 7 == 0) tbodyHTML += "<tr>";
                 // 표시 해줄 일자의 달이 현재 달과 다를 경우 클래스 추가
                 if(listMonth != month){
                     tbodyHTML += "<td class='anotherMonth'><p>"+listDay+"</p></td>";
                 }else{
-                    if(holiday[item] != undefined){
-                        tbodyHTML += "<td class='holiday'><p>"+listDay+"</p><p class='holiday_name'>"+holiday[item]+"</p></td>";
+                    // 휴일의 경우, name 값을 가지고 있으며, 그럴 경우 휴일 표시
+                    if(listName != null){
+                        tbodyHTML += "<td class='holiday'><p>"+listDay+"</p><p class='holiday_name'>"+listName+"</p></td>";
                     }else{
                         tbodyHTML += "<td><p>"+listDay+"</p></td>";
                     }
@@ -116,6 +114,11 @@
 
         // button을 클릭 시 수행될 함수
         let buttonFunction = function(mode){
+            // 법정 공휴일 API가 현재년도 기준 다음년까지만 제공하므로, 그럴 시 막기
+            if((year == todayYear+1) && month == 12){
+                alert(year + "년 12월까지만 조회가 가능합니다.");
+                return;
+            }
             // mode에 따라 분기 처리
             month = mode == 'N' ? month + 1 : month - 1;
             if(month > 12){

@@ -8,6 +8,10 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-        <typeAlias alias="HolidayDTO" type="com.yeop.calendar.domain.HolidayDTO"/>
+        <typeAlias alias="CalendarDTO" type="com.yeop.calendar.domain.CalendarDTO"/>
+        <typeAlias alias="CalendarVO" type="com.yeop.calendar.domain.CalendarVO"/>
     </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" />
+    </typeHandlers>
 </configuration>

@@ -12,5 +12,6 @@
 </head>
 <body>
 HI im index
+<a href="/calendar">CALENDAR</a>
 </body>
 </html>
