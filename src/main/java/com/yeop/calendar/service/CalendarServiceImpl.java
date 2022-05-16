@@ -157,7 +157,7 @@ public class CalendarServiceImpl implements CalendarService {
         /////
         // 로직
         /////
-
+        System.out.println("xml = " + xml);
         // 받아온 XML parsing을 위한 세팅
         dbFactory = DocumentBuilderFactory.newInstance();
         db = dbFactory.newDocumentBuilder();
@@ -173,7 +173,7 @@ public class CalendarServiceImpl implements CalendarService {
             item = list.item(i);
             if (item.getNodeType() == Node.ELEMENT_NODE) {
                 element = (Element) item;
-
+                
                 dto = new CalendarDTO();
                 // 받아온 item의 값으로 DTO값 세팅
                 // 이름 값을 가져와 세팅
