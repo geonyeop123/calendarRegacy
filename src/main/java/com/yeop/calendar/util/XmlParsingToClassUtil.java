@@ -10,45 +10,59 @@ import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class XmlParsingToClassUtil {
-    private String xml;
-    private Class clazz;
-    private Map<String, String> map;
 
-    public XmlParsingToClassUtil(){}
-    public XmlParsingToClassUtil(String xml, Class clazz){
-        this.xml = xml;
-        this.clazz = clazz;
-    }
-
-    public Map<String, String> getMap(String xml) throws Exception{
+    public List<Map<String, String>> getList(String xml, Map<String, String> fieldMap) throws Exception{
         DocumentBuilderFactory dbFactory = null;
         DocumentBuilder db = null;
         Document document = null;
-        NodeList list = null;
+        NodeList currentList = null;
+        NodeList nextList = null;
         Node item = null;
         Element element = null;
         CalendarDTO dto = null;
         List<CalendarDTO> holidayList = null;
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        Map currentMap = null;
+        Map rootMap = null;
+        Map nextMap = null;
 
         dbFactory = DocumentBuilderFactory.newInstance();
         db = dbFactory.newDocumentBuilder();
         document = db.parse(new InputSource(new StringReader(xml)));
-        System.out.println(xml);
+
+        // root Element 얻기
         element = document.getDocumentElement();
-        list = element.getChildNodes();
 
-        for(int i = 0; i < list.getLength(); i++){
-            item = list.item(i);
-            System.out.println("item name =" + item.getNodeName());
+        item = element.cloneNode(true);
+        if(item.hasChildNodes()){
+            currentMap = new HashMap();
+            nextMap = new HashMap();
+            currentMap.put(item.getNodeName(), nextMap);
+            rootMap = currentMap;
+            currentList = item.getChildNodes();
+            
         }
-        map = new HashMap<String, String>();
 
+        // {{response = {getChildNode}}}
 
-        return map;
+//        for(int i = 0; i < currentList.getLength(); i++){
+//            item = currentList.item(i);
+//            nextList = item.getChildNodes();
+//            map = new HashMap<String, String>();
+//            for(int j = 0; j < nextList.getLength(); j++){
+//                item = nextList.item(j);
+//                if(item.getNodeType() == Node.ELEMENT_NODE && fieldMap.containsKey(item.getNodeName())){
+//                    map.put(fieldMap.get(item.getNodeName()), item.getTextContent());
+//                }
+//            }
+//            list.add(map);
+//        }
+        return list;
     }
 }

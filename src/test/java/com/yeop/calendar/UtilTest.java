@@ -6,6 +6,10 @@ import com.yeop.calendar.util.XmlParsingToClassUtil;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class UtilTest {
 
@@ -21,8 +25,12 @@ public class UtilTest {
 
     @Test
     public void test1() throws Exception{
+        List<Map<String, String>> list = null;
         XmlParsingToClassUtil parsing = new XmlParsingToClassUtil();
-        parsing.getMap("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+        Map<String, String> fieldMap = new HashMap<>();
+        fieldMap.put("dateName", "name");
+        fieldMap.put("locdate", "date");
+        list = parsing.getList("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<response>\n" +
                     "<header>\n" +
                         "<resultCode>00</resultCode>\n" +
@@ -37,33 +45,34 @@ public class UtilTest {
                                 "<locdate>20150101</locdate>\n" +
                                 "<seq>1</seq>\n" +
                             "</item>\n" +
-                        "<item>\n" +
-                            "<dateKind>01</dateKind>\n" +
-                            "<dateName>설날</dateName>\n" +
-                            "<isHoliday>Y</isHoliday>\n" +
-                            "<locdate>20150218</locdate>\n" +
-                            "<seq>1</seq>\n" +
-                        "</item>\n" +
-                        "<item>\n" +
-                            "<dateKind>01</dateKind>\n" +
-                            "<dateName>설날</dateName>\n" +
-                            "<isHoliday>Y</isHoliday>\n" +
-                            "<locdate>20150219</locdate>\n" +
-                            "<seq>1</seq>\n" +
-                        "</item>\n" +
-                        "<item>\n" +
-                            "<dateKind>01</dateKind>\n" +
-                            "<dateName>설날</dateName>\n" +
-                            "<isHoliday>Y</isHoliday>\n" +
-                            "<locdate>20150220</locdate>\n" +
-                            "<seq>1</seq>\n" +
-                        "</item>\n" +
-                    "</items>\n" +
+                            "<item>\n" +
+                                "<dateKind>01</dateKind>\n" +
+                                "<dateName>설날</dateName>\n" +
+                                "<isHoliday>Y</isHoliday>\n" +
+                                "<locdate>20150218</locdate>\n" +
+                                "<seq>1</seq>\n" +
+                            "</item>\n" +
+                            "<item>\n" +
+                                "<dateKind>01</dateKind>\n" +
+                                "<dateName>설날</dateName>\n" +
+                                "<isHoliday>Y</isHoliday>\n" +
+                                "<locdate>20150219</locdate>\n" +
+                                "<seq>1</seq>\n" +
+                            "</item>\n" +
+                            "<item>\n" +
+                                "<dateKind>01</dateKind>\n" +
+                                "<dateName>설날</dateName>\n" +
+                                "<isHoliday>Y</isHoliday>\n" +
+                                "<locdate>20150220</locdate>\n" +
+                                "<seq>1</seq>\n" +
+                            "</item>\n" +
+                        "</items>\n" +
                     "<numOfRows>10</numOfRows>\n" +
                     "<pageNo>1</pageNo>\n" +
                     "<totalCount>16</totalCount>\n" +
                 "</body>\n" +
-            "</response>");
+            "</response>", fieldMap);
+        System.out.println(list);
 
     }
 }
