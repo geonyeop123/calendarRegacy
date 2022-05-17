@@ -17,52 +17,36 @@ import java.util.Map;
 
 public class XmlParsingToClassUtil {
 
-    public List<Map<String, String>> getList(String xml, Map<String, String> fieldMap) throws Exception{
+    public List<Map<String, String>> xmlToList(String xml, Map<String, String> fieldMap, String startPoint) throws Exception{
         DocumentBuilderFactory dbFactory = null;
         DocumentBuilder db = null;
         Document document = null;
-        NodeList currentList = null;
-        NodeList nextList = null;
+        NodeList rootNodeList = null;
+        NodeList childNodeList = null;
         Node item = null;
-        Element element = null;
-        CalendarDTO dto = null;
-        List<CalendarDTO> holidayList = null;
         ArrayList<Map<String, String>> list = new ArrayList<>();
-        Map currentMap = null;
-        Map rootMap = null;
-        Map nextMap = null;
+        Map<String, String> map = null;
 
         dbFactory = DocumentBuilderFactory.newInstance();
         db = dbFactory.newDocumentBuilder();
         document = db.parse(new InputSource(new StringReader(xml)));
 
         // root Element 얻기
-        element = document.getDocumentElement();
+        rootNodeList = document.getElementsByTagName(startPoint);
 
-        item = element.cloneNode(true);
-        if(item.hasChildNodes()){
-            currentMap = new HashMap();
-            nextMap = new HashMap();
-            currentMap.put(item.getNodeName(), nextMap);
-            rootMap = currentMap;
-            currentList = item.getChildNodes();
-            
+
+        for(int i = 0; i < rootNodeList.getLength(); i++){
+            item = rootNodeList.item(i);
+            childNodeList = item.getChildNodes();
+            map = new HashMap<String, String>();
+            for(int j = 0; j < childNodeList.getLength(); j++){
+                item = childNodeList.item(j);
+                if(item.getNodeType() == Node.ELEMENT_NODE && fieldMap.containsKey(item.getNodeName())){
+                    map.put(fieldMap.get(item.getNodeName()), item.getTextContent());
+                }
+            }
+            list.add(map);
         }
-
-        // {{response = {getChildNode}}}
-
-//        for(int i = 0; i < currentList.getLength(); i++){
-//            item = currentList.item(i);
-//            nextList = item.getChildNodes();
-//            map = new HashMap<String, String>();
-//            for(int j = 0; j < nextList.getLength(); j++){
-//                item = nextList.item(j);
-//                if(item.getNodeType() == Node.ELEMENT_NODE && fieldMap.containsKey(item.getNodeName())){
-//                    map.put(fieldMap.get(item.getNodeName()), item.getTextContent());
-//                }
-//            }
-//            list.add(map);
-//        }
         return list;
     }
 }

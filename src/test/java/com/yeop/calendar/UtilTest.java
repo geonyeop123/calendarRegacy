@@ -30,7 +30,7 @@ public class UtilTest {
         Map<String, String> fieldMap = new HashMap<>();
         fieldMap.put("dateName", "name");
         fieldMap.put("locdate", "date");
-        list = parsing.getList("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+        list = parsing.xmlToList("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
                 "<response>\n" +
                     "<header>\n" +
                         "<resultCode>00</resultCode>\n" +
@@ -71,7 +71,7 @@ public class UtilTest {
                     "<pageNo>1</pageNo>\n" +
                     "<totalCount>16</totalCount>\n" +
                 "</body>\n" +
-            "</response>", fieldMap);
+            "</response>", fieldMap, "item");
         System.out.println(list);
 
     }
