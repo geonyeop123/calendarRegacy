@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yeop.calendar.mapper.HolidayMapper">
     <select id="selectList" resultType="CalendarDTO" parameterType="CalendarVO">
-        SELECT holiday_idx, year, name, date
+        SELECT holiday_idx, year, name, date, is_holiday
         FROM TB_HOLIDAY
         WHERE year= #{year}
         AND DATE_FORMAT(date, '%m') = #{month}

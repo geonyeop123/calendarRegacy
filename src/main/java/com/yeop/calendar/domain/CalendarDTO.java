@@ -14,6 +14,8 @@ public class CalendarDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
+    private boolean isHoliday;
+
     public CalendarDTO(){}
 
     public CalendarDTO(int year, String name, LocalDate date){
@@ -56,13 +58,22 @@ public class CalendarDTO {
         this.date = date;
     }
 
+    public boolean isHoliday() {
+        return isHoliday;
+    }
+
+    public void setHoliday(boolean holiday) {
+        isHoliday = holiday;
+    }
+
     @Override
     public String toString() {
-        return "HolidayDTO{" +
+        return "CalendarDTO{" +
                 "holidayIdx=" + holidayIdx +
                 ", year=" + year +
                 ", name='" + name + '\'' +
                 ", date=" + date +
+                ", isHoliday=" + isHoliday +
                 '}';
     }
 

@@ -50,6 +50,7 @@
         let listMonth = 0;
         let listDay = 0;
         let listName = null;
+        let isHoliday = false;
         let tbodyHTML = "";
 
         // calendar를 만드는 ajax 함수
@@ -88,6 +89,7 @@
                 listMonth = parseInt(item.date.substring(5,7));
                 listDay = item.date.substring(8,10);
                 listName = item.name;
+                isHoliday = item.holiday;
                 // 최초와 7번째마다 tr태그로 구분
                 if( index == 0 || index % 7 == 0) tbodyHTML += "<tr>";
                 // 표시 해줄 일자의 달이 현재 달과 다를 경우 클래스 추가
@@ -95,7 +97,7 @@
                     tbodyHTML += "<td class='anotherMonth'><p>"+listDay+"</p></td>";
                 }else{
                     // 휴일의 경우, name 값을 가지고 있으며, 그럴 경우 휴일 표시
-                    if(listName != null){
+                    if(isHoliday){
                         tbodyHTML += "<td class='holiday'><p>"+listDay+"</p><p class='holiday_name'>"+listName+"</p></td>";
                     }else{
                         tbodyHTML += "<td><p>"+listDay+"</p></td>";
