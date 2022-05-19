@@ -17,6 +17,7 @@ public class XmlParsingToClassUtil {
 
     // xml을 받아 Map을 담은 List로 반환하는 메서드
     public List<Map<String, String>> xmlToList(String xml, Map<String, String> fieldMap, String startPoint) throws Exception{
+
         /////
         // 선언
         /////
@@ -64,13 +65,11 @@ public class XmlParsingToClassUtil {
         rootNodeList = getNodeList(xml, startPoint);
         // 해당 지점의 첫번째 노드 획득
         childNodeList = rootNodeList.item(0).getChildNodes();
-        // Map 획득
-        dataMap = getMap(childNodeList, fieldMap);
 
         /////
         // 반환
         /////
-        return dataMap;
+        return getMap(childNodeList, fieldMap);
     }
 
     // 들어온 NodeList를 fieldMap에 맞게 Map으로 Parsing하는 메서드
