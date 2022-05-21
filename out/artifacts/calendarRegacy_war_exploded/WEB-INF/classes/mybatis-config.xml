@@ -9,6 +9,7 @@
     </settings>
     <typeAliases>
         <typeAlias alias="CalendarDTO" type="com.yeop.calendar.domain.CalendarDTO"/>
+        <typeAlias alias="HolidayAPIDTO" type="com.yeop.calendar.domain.HolidayAPIDTO"/>
         <typeAlias alias="CalendarVO" type="com.yeop.calendar.domain.CalendarVO"/>
     </typeAliases>
     <typeHandlers>

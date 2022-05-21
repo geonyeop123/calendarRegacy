@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class CalendarDTO {
     private int holidayIdx;
-    private int year;
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -18,8 +17,7 @@ public class CalendarDTO {
 
     public CalendarDTO(){}
 
-    public CalendarDTO(int year, String name, LocalDate date){
-        this.year = year;
+    public CalendarDTO(String name, LocalDate date){
         this.name = name;
         this.date = date;
     }
@@ -30,14 +28,6 @@ public class CalendarDTO {
 
     public void setHolidayIdx(int holidayIdx) {
         this.holidayIdx = holidayIdx;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public String getName() {
@@ -70,7 +60,6 @@ public class CalendarDTO {
     public String toString() {
         return "CalendarDTO{" +
                 "holidayIdx=" + holidayIdx +
-                ", year=" + year +
                 ", name='" + name + '\'' +
                 ", date=" + date +
                 ", isHoliday=" + isHoliday +

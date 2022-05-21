@@ -3,8 +3,9 @@ package com.yeop.calendar.service;
 import com.yeop.calendar.domain.CalendarDTO;
 import com.yeop.calendar.domain.CalendarMaker;
 import com.yeop.calendar.domain.CalendarVO;
+import com.yeop.calendar.domain.HolidayAPIDTO;
 import com.yeop.calendar.persistence.CalendarDAO;
-import com.yeop.calendar.util.XmlParsingToClassUtil;
+import com.yeop.calendar.util.XmlParsingToDTOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +17,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +35,12 @@ public class CalendarServiceImpl implements CalendarService {
         /////
         List<CalendarDTO> calendarList = new ArrayList<>();
         List<CalendarDTO> holidayList = null;
+        List<HolidayAPIDTO> insertList = null;
         List<Map<String, String>> dataList = null;
-        Map<String, String> fieldMap = null;
-        String holidayXML = null;
         int resultCnt = 0;
         CalendarMaker cm = null;
         CalendarDTO dto = null;
         LocalDate currentDate = null;
-        XmlParsingToClassUtil xmlParsingToClassUtil = null;
 
         /////
         // 로직
@@ -52,40 +49,20 @@ public class CalendarServiceImpl implements CalendarService {
         // 해당 년도의 Holiday가 있는지 확인 없으면 HolidayAPI를 이용하여 DB에 값 적재
         if(dao.selectCount(vo.getYear()) < 1){
 
-            // API를 이용하여 XML 받아오기
-            holidayXML = getHoliday(vo.getYear());
-
-            // XML의 Node Name과 DTO의 field Name을 맵핑하기 위해 fieldMap 생성
-            fieldMap = new HashMap<>();
-            fieldMap.put("dateName", "name");
-            fieldMap.put("locdate", "date");
-
-            // XML - List parsing을 위해 유틸 생성
-            xmlParsingToClassUtil = new XmlParsingToClassUtil();
-
-            // 해당 XML을 parsing하여 holiday값을 가진 Map을 포함한 List 만들기
-            dataList = xmlParsingToClassUtil.xmlToList(holidayXML, fieldMap, "item");
-
-            // List를 돌며 List<DTO> 생성
-            holidayList = new ArrayList<>();
-            for(Map<String, String> map : dataList){
-                dto = new CalendarDTO();
-                dto.setYear(vo.getYear());
-                dto.setName(map.get("name"));
-                dto.setDate(LocalDate.parse(map.get("date"), DateTimeFormatter.ofPattern("yyyyMMdd")));
-                dto.setHoliday(true);
-                holidayList.add(dto);
-            }
+            // List<DTO> 생성
+            insertList = XmlParsingToDTOUtil.xmlToDtoList(getXML(vo.getYear())
+                                                          , HolidayAPIDTO.class
+                                                          , "item");
 
             // 해당 list를 DB에 insert 하기
-            resultCnt = dao.create(holidayList);
+            resultCnt = dao.create(insertList);
 
             // 오류 발생 시 처리
             if(resultCnt < 0) throw new SQLException();
-        }else{
-            // 해당 월의 HolidayList 가져오기
-            holidayList = dao.selectList(vo);
         }
+
+        // 해당 월의 HolidayList 가져오기
+        holidayList = dao.selectList(vo);
 
         // Calendar 생성
 
@@ -119,7 +96,7 @@ public class CalendarServiceImpl implements CalendarService {
 
 
 
-    private String getHoliday(int year) throws Exception{
+    private String getXML(int year) throws Exception{
         /////
         // 선언
         /////

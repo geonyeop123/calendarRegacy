@@ -58,13 +58,13 @@ public class ConnectionTest {
         CalendarDTO dto = null;
         List<CalendarDTO> list = new ArrayList<>();
 
-        dto = new CalendarDTO(2022, "어버이 날", LocalDate.of(2022, 5, 8));
-        System.out.println("dto = " + dto);
-        list.add(dto);
-        dto = new CalendarDTO(2022, "스승의 날", LocalDate.of(2022, 5, 5));
-        list.add(dto);
+//        dto = new CalendarDTO(2022, "어버이 날", LocalDate.of(2022, 5, 8));
+//        System.out.println("dto = " + dto);
+//        list.add(dto);
+//        dto = new CalendarDTO(2022, "스승의 날", LocalDate.of(2022, 5, 5));
+//        list.add(dto);
         System.out.println("list=" + list);
-        dao.create(list);
+//        dao.create(list);
     }
 
     @Test

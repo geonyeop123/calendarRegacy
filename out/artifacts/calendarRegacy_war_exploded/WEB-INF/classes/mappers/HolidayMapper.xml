@@ -4,23 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yeop.calendar.mapper.HolidayMapper">
     <select id="selectList" resultType="CalendarDTO" parameterType="CalendarVO">
-        SELECT holiday_idx, year, name, date, is_holiday
+        SELECT holiday_idx, name, date, is_holiday
         FROM TB_HOLIDAY
-        WHERE year= #{year}
+        WHERE DATE_FORMAT(date, '%Y') = ${year}
         AND DATE_FORMAT(date, '%m') = #{month}
     </select>
 
     <select id="count" resultType="int">
         SELECT COUNT(*)
         FROM TB_HOLIDAY
-        WHERE year= #{year}
+        WHERE DATE_FORMAT(date, '%Y') = #{year}
     </select>
 
     <insert id="createHoliday" parameterType="java.util.List">
-        INSERT INTO TB_HOLIDAY(year, name, date)
+        INSERT INTO TB_HOLIDAY(name, date)
         VALUES
         <foreach collection="list" item="item" separator=" , ">
-            (#{item.year}, #{item.name}, #{item.date})
+            (#{item.dateName}, #{item.locdate})
         </foreach>
     </insert>
 </mapper>

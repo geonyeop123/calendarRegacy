@@ -2,6 +2,7 @@ package com.yeop.calendar.persistence;
 
 import com.yeop.calendar.domain.CalendarVO;
 import com.yeop.calendar.domain.CalendarDTO;
+import com.yeop.calendar.domain.HolidayAPIDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ public class CalendarDAOImpl implements CalendarDAO{
     }
 
     @Override
-    public int create(List<CalendarDTO> list) throws Exception {
+    public int create(List<HolidayAPIDTO> list) throws Exception {
         return sqlSession.insert(namespace + "createHoliday", list);
     }
 

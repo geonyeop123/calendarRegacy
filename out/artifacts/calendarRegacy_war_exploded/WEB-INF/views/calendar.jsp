@@ -65,7 +65,8 @@
                 success : function(result){
                     drawCalendar(result);
                 },
-                error: function(){
+                error: function(request, status, error){
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                     alert("알 수 없는 에러가 발생했습니다!!");
                     location.href='error.jsp';
                 },
