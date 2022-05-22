@@ -19,13 +19,12 @@ import java.util.*;
 
 public class XmlParsingToDTOUtil {
 
-    // xml을 받아 DTO를 담은 List로 반환하는 메서드
+    // xml을 받아 DTO를 반환하는 메서드
     public static <T> T xmlToDto(String xml, Class<?> clazz, String startPoint) throws Exception{
         /////
         // 선언
         /////
         Constructor constructor = null;
-        ArrayList list = new ArrayList<>();
 
         constructor = clazz.getDeclaredConstructor();
         if(!constructor.isAccessible()) constructor.setAccessible(true);
@@ -46,14 +45,13 @@ public class XmlParsingToDTOUtil {
         Constructor constructor = null;
         ArrayList list = new ArrayList<>();
 
-        // constructor 세팅(기본 생성자)
-        constructor = clazz.getDeclaredConstructor();
-        if(!constructor.isAccessible()) constructor.setAccessible(true);
-
-
         /////
         // 로직
         /////
+
+        // constructor 세팅(기본 생성자)
+        constructor = clazz.getDeclaredConstructor();
+        if(!constructor.isAccessible()) constructor.setAccessible(true);
 
         // Point 지점의 NodeList 획득
         rootNodeList = getNodeList(xml, startPoint);
